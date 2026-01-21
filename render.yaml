@@ -9,4 +9,4 @@ services:
       - key: TELEGRAM_BOT_TOKEN
         sync: false
       - key: PORT
-        value: 8443
+        value: 10000
