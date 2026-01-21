@@ -454,7 +454,7 @@ def main():
     print("📡 Press Ctrl+C to stop")
     
     # For Render deployment
-    port = int(os.environ.get('PORT', 8443))
+    port = int(os.environ.get('PORT', 10000))
     
     if 'RENDER' in os.environ:
         # Use webhook for Render
