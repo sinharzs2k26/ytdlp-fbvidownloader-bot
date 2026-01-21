@@ -1,12 +1,21 @@
 services:
   - type: web
-    name: telegram-ytdlp-bot
+    name: ytdlp-telegram-bot
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    region: singapore
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
     startCommand: python bot.py
     envVars:
       - key: TELEGRAM_BOT_TOKEN
         sync: false
+        value: 8592427659:AAEwOQyvgWlVhrVnpj9teRBpVFROu5Ctpoc
       - key: PORT
         value: 10000
+    autoDeploy: true
+    disk:
+      name: temp
+      mountPath: /tmp
+      sizeGB: 1
