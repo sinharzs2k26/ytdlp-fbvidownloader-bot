@@ -1,4 +1,4 @@
-python-telegram-bot==21.7
-yt-dlp==2024.11.11
-python-dotenv==1.0.0
-ffmpeg-python==0.2.0
+python-telegram-bot
+yt-dlp
+python-dotenv
+ffmpeg-python
