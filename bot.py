@@ -649,21 +649,31 @@ def main():
         logger.info("🚀 Running in Render mode")
         port = int(os.environ.get('PORT', 8443))
         
-        async def post_init(application: Application):
-            webhook_url = os.environ.get('RENDER_EXTERNAL_URL', '')
-            if webhook_url:
-                webhook_url = f"{webhook_url}/{TOKEN}"
+        # Get webhook URL
+        webhook_url = os.environ.get('RENDER_EXTERNAL_URL')
+        if webhook_url:
+            webhook_url = f"{webhook_url}/{TOKEN}"
+            logger.info(f"Setting webhook to: {webhook_url}")
+            
+            # Set webhook before starting
+            async def set_webhook():
                 await application.bot.set_webhook(webhook_url)
-                logger.info(f"Webhook set to: {webhook_url}")
-        
-        application.run_webhook(
-            listen="0.0.0.0",
-            port=port,
-            webhook_url="",
-            drop_pending_updates=True,
-            allowed_updates=Update.ALL_TYPES,
-            post_init=post_init
-        )
+            
+            # Run the application with webhook
+            application.run_webhook(
+                listen="0.0.0.0",
+                port=port,
+                url_path=TOKEN,
+                webhook_url=webhook_url,
+                drop_pending_updates=True,
+                allowed_updates=Update.ALL_TYPES
+            )
+        else:
+            logger.warning("No RENDER_EXTERNAL_URL found, using polling instead")
+            application.run_polling(
+                drop_pending_updates=True,
+                allowed_updates=Update.ALL_TYPES
+            )
     else:
         # Use polling for local development
         logger.info("💻 Running in local mode (polling)")
