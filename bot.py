@@ -329,13 +329,13 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Prepare message with YouTube warning if needed
         title = info.get('title', 'Unknown Title')[:100]
         def format_duration(seconds):
-    if not seconds:
-        return "Unknown"
-    try:
-        secs = float(seconds)
-        return f"{int(secs // 60)}:{int(secs % 60):02d}"
-    except:
-        return "Unknown"
+            if not seconds:
+                return "Unknown"
+            try:
+                secs = float(seconds)
+                return f"{int(secs // 60)}:{int(secs % 60):02d}"
+            except:
+                return "Unknown"
 
 duration_str = format_duration(info.get('duration'))
         
