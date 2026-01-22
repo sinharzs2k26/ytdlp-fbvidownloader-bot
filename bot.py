@@ -337,7 +337,7 @@ async def handle_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
             except:
                 return "Unknown"
 
-duration_str = format_duration(info.get('duration'))
+        duration_str = format_duration(info.get('duration'))
         
         message = f"🎬 **{title}**\n⏱ Duration: {duration_str}\n\n"
         
