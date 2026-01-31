@@ -8,8 +8,6 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
 import yt_dlp
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import threading
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 
@@ -651,26 +649,6 @@ def main():
     # Start the bot
     logger.info("🤖 Bot is starting...")
     logger.info("📡 Press Ctrl+C to stop")
-    
-    class HealthHandler(BaseHTTPRequestHandler):
-        def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
-            self.end_headers()
-            self.wfile.write(b'Bot is alive!')
-        
-        def log_message(self, format, *args):
-            pass  # Silence logs
-
-    def run_health_server():
-        port = int(os.environ.get("PORT", 10000))
-        httpd = HTTPServer(('0.0.0.0', port), HealthHandler)
-        logger.info(f"✅ Health server on port {port}")
-        httpd.serve_forever()
-    
-    # Start health server
-    health_thread = threading.Thread(target=run_health_server, daemon=True)
-    health_thread.start()
     
     application.run_polling(
         drop_pending_updates=True,
